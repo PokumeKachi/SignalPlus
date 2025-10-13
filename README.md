@@ -14,9 +14,9 @@ open-source signal module for Roblox, with dynamic types.
 
 # ⚡ Performance, efficiency, features.
 Signal+ is for developers who strive for performance and efficiency.<br>
-And it still has all the features you'll ever need!
+And it still has all the features you’ll ever need!
 
-**It's perhaps the best of its kind,<br>
+**It’s perhaps the best of its kind,<br>
 beating the top alternatives like<br>
 Good-, Lemon- and FastSignal.**
 

@@ -17,7 +17,7 @@ layout:
 
 # Introduction
 
-When you require the module, it'll return a function, which you can use to create signals:
+When you require the module, it’ll return a function, which you can use to create signals:
 
 ```lua
 local Signal = require(script.SignalPlus)

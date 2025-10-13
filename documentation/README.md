@@ -6,9 +6,9 @@ coverY: 0
 # Welcome
 
 Signal+ is for developers who strive for performance and efficiency.\
-And it still has all the features you'll ever need!
+And it still has all the features you’ll ever need!
 
-**It's perhaps the best of its kind,**\
+**It’s perhaps the best of its kind,**\
 **beating the top alternatives like**\
 **Good-, Lemon- and FastSignal.**
 
