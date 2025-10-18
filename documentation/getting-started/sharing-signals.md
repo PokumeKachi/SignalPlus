@@ -66,7 +66,7 @@ end)
 
 <details>
 
-<summary>Built-in shared table</summary>
+<summary>Built-in shared table (Roblox-specific)</summary>
 
 You can store signals in the built-in shared table, which multiple other scripts can then access and thereby access the same signals and communicate.
 
