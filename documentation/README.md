@@ -1,15 +1,31 @@
 ---
 cover: .gitbook/assets/Cover.png
 coverY: 0
+layout:
+  width: default
+  cover:
+    visible: true
+    size: full
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Welcome
 
-Signal+ is for developers who strive for performance and efficiency.\
-And it still has all the features you’ll ever need!
+Signal+ is built for developers who demand performance without compromise.\
+It’s fast, reliable, and equipped with every feature that matters.
 
-**It’s perhaps the best of its kind,**\
-**beating the top alternatives like**\
-**Good-, Lemon- and FastSignal.**
+**It easily outperforms leading alternatives like**\
+**Good-, Lemon-, and FastSignal — in both design and execution.**
 
-_The perfect replacement for_ [_BindableEvents_](https://create.roblox.com/docs/reference/engine/classes/BindableEvent)_._
+Ready to learn all about it? Let’s go!
