@@ -7,5 +7,5 @@
 
 * [Introduction](getting-started/introduction.md)
 * [API Reference](getting-started/api-reference.md)
-* [Custom types](getting-started/custom-types.md)
+* [Generic types](getting-started/custom-types.md)
 * [Sharing signals](getting-started/sharing-signals.md)
