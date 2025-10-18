@@ -2,8 +2,8 @@
 
 <img src="https://raw.githubusercontent.com/AlexanderLindholt/SignalPlus/refs/heads/main/Logo.png"></img>
 
-An insanely fast, lightweight, fully typed and documented<br>
-open-source signal module for Roblox, with dynamic types.
+An exceptionally fast, lightweight, and elegant open-source signal<br>
+library for Luau — with generic types and detailed documentation.
 
 [<img src="https://raw.githubusercontent.com/AlexanderLindholt/LinkButtons/refs/heads/main/Static/Module.png"></img>](https://create.roblox.com/store/asset/118793070598362) ​ [<img src="https://raw.githubusercontent.com/AlexanderLindholt/LinkButtons/refs/heads/main/Static/Devforum.png"></img>](https://devforum.roblox.com/t/3552231)
 </div>
@@ -12,16 +12,13 @@ open-source signal module for Roblox, with dynamic types.
 <br>
 <br>
 
-# ⚡ Performance, efficiency, features.
-Signal+ is for developers who strive for performance and efficiency.<br>
-And it still has all the features you’ll ever need!
+# ⚡ Speed. Reliability. Elegance.
+Signal+ is built for developers who demand performance without compromise.<br>
+It’s fast, reliable, and equipped with every feature that matters.
 
-**It’s perhaps the best of its kind,<br>
-beating the top alternatives like<br>
-Good-, Lemon- and FastSignal.**
-
-*The perfect replacement for BindableEvents.*
+**It easily outperforms leading alternatives like<br>
+Good-, Lemon-, and FastSignal — in both design and execution.**
 <br>
 <br>
 
-## Check out the [guides and documentation](https://alexxander.gitbook.io/signalplus) to learn all about it!
+## Visit the [documentation](https://alexxander.gitbook.io/signalplus) to learn more!
