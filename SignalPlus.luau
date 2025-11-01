@@ -20,16 +20,19 @@
  +++++++++++++++++++++++++                                                                          
       +++++                                                                                         
 
-v3.5.0
+v3.6.0
 
-An insanely fast, lightweight, fully typed and documented
-open-source signal module for Roblox, with dynamic types.
+An exceptionally fast, lightweight, and elegant open-source signal
+library for Luau — with generic types and detailed documentation.
 
 
-GitHub:
+GitHub (repository):
 https://github.com/AlexanderLindholt/SignalPlus
 
-DevForum:
+GitBook (documentation):
+https://alexxander.gitbook.io/SignalPlus
+
+DevForum (topic):
 https://devforum.roblox.com/t/3552231
 
 
@@ -63,7 +66,8 @@ SOFTWARE.
 export type Connection = {
 	Connected: boolean,
 	Disconnect: typeof(
-		-- Erases the connection.
+		-- Removes the connection from the signal.
+		-- The connection’s data remains.
 		function(connection: Connection) end
 	)
 }
@@ -82,18 +86,18 @@ export type Signal<Parameters...> = {
 	),
 	
 	Fire: typeof(
-		-- Runs all connected functions, and resumes all waiting threads.
+		--✨
 		function(signal: Signal<Parameters...>, ...: Parameters...) end
 	),
 	
 	DisconnectAll: typeof(
-		-- Erases all connections.<br>
+		-- Erases all connections.
 		-- <em>Much faster than calling <code>Disconnect</code> on each.</em>
 		function(signal: Signal<Parameters...>) end
 	),
 	Destroy: typeof(
-		-- Erases all connections and methods, making the signal unusable.<br>
-		-- Remove references to the signal to delete it completely.
+		-- Erases all connections and methods.
+		-- <strong>To fully erase, also remove all references to the signal.</strong>
 		function(signal: Signal<Parameters...>) end
 	)
 }
@@ -102,8 +106,12 @@ type CreateSignal = typeof(
 	function(): Signal end
 )
 
--- Setup thread recycling.
+-- Spawn function.
+local spawnThread = if script:GetAttribute("Deferred") then task.defer else task.spawn
+
+-- Setup callback threads.
 local threads = {}
+
 local function reusableThreadCall(callback, thread, ...)
 	callback(...)
 	table.insert(threads, thread)
@@ -123,7 +131,7 @@ Connection.Disconnect = function(connection)
 	if not connection.Connected then return end
 	
 	-- Remove connection.
-	connection.Connected = false
+	connection.Connected = nil
 	
 	local signal = connection.Signal
 	local previous = connection.Previous
@@ -145,14 +153,14 @@ local Signal = {}
 Signal.__index = Signal
 
 Signal.Connect = function(signal, callback)
-	-- Cache linked list head.
+	-- Linked list head.
 	local head = signal.Head
 	
 	-- Create connection.
 	local connection = {
 		Signal = signal,
-		
 		Previous = head,
+		
 		Callback = callback,
 		
 		Connected = true
@@ -170,15 +178,15 @@ Signal.Connect = function(signal, callback)
 	return setmetatable(connection, Connection)
 end
 Signal.Once = function(signal, callback)
-	-- Cache linked list head.
+	-- Linked list head.
 	local head = signal.Head
 	
 	-- Create connection.
 	local connection = nil
 	connection = {
 		Signal = signal,
-		
 		Previous = head,
+		
 		Callback = function(...)
 			-- Verify connection.
 			if not connection.Connected then return end
@@ -221,15 +229,14 @@ Signal.Wait = function(signal)
 	-- Save this thread to resume later.
 	local thread = coroutine.running()
 	
-	-- Cache linked list head.
+	-- Linked list head.
 	local head = signal.Head
 	
 	-- Create connection.
 	local connection = nil
 	connection = {
-		Signal = signal,
-		
 		Previous = head,
+		
 		Callback = function(...)
 			-- Remove connection.
 			connection.Connected = false
@@ -252,9 +259,7 @@ Signal.Wait = function(signal)
 				local _, err = coroutine.resume(thread, ...)
 				if err then error(err, 2) end
 			end
-		end,
-		
-		Connected = true
+		end
 	}
 	
 	-- Add connection.
@@ -265,44 +270,58 @@ Signal.Wait = function(signal)
 	end
 	signal.Head = connection
 	
-	-- Yield until the next fire, and return the arguments on resume.
+	-- Yield until the next fire, then return the arguments on resume.
 	return coroutine.yield()
 end
 
 Signal.Fire = function(signal, ...)
 	local connection = signal.Tail -- Start from the tail (back) of the list.
 	while connection do
-		-- Find or create a thread, and run the callback in it.
+		-- Find or create a thread, then run the callback in it.
 		local length = #threads
 		if length == 0 then
 			local thread = coroutine.create(reusableThread)
-			coroutine.resume(thread)
-			task.defer(thread, connection.Callback, thread, ...)
+			coroutine.resume(thread) -- Initialize.
+			spawnThread(thread, connection.Callback, thread, ...)
 		else
 			local thread = threads[length]
 			threads[length] = nil -- Remove from free threads list.
-			task.defer(thread, connection.Callback, thread, ...)
+			spawnThread(thread, connection.Callback, thread, ...)
 		end
-		
 		-- Traverse.
 		connection = connection.Next
 	end
 end
 
 Signal.DisconnectAll = function(signal)
-	-- Remove references, so that the connections will be garbage collected.
+	-- Remove all connections.
+	local connection = signal.Tail
+	while connection do
+		connection.Connected = nil
+		-- Traverse.
+		connection = connection.Next
+	end
+	-- Remove signal’s references.
 	signal.Tail = nil
 	signal.Head = nil
 end
 Signal.Destroy = function(signal)
-	-- Remove references, so that the connections will be garbage collected.
+	-- Remove all connections.
+	local connection = signal.Tail
+	while connection do
+		connection.Connected = nil
+		-- Traverse.
+		connection = connection.Next
+	end
+	-- Remove signal’s references.
 	signal.Tail = nil
 	signal.Head = nil
+	
 	-- Unlink signal methods.
 	setmetatable(signal, nil)
 end
 
 -- Signal creation function.
 return function()
-	return setmetatable({}, Signal) -- New, blank metatable with the methods attached.
+	return setmetatable({}, Signal) -- New blank metatable with signal methods attached.
 end :: CreateSignal
