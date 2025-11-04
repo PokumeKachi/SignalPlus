@@ -20,7 +20,7 @@
  +++++++++++++++++++++++++                                                                          
       +++++                                                                                         
 
-v3.6.0
+v3.6.1
 
 An exceptionally fast, lightweight, and elegant open-source signal
 library for Luau — with generic types and detailed documentation.
@@ -255,9 +255,8 @@ Signal.Wait = function(signal)
 			end
 			
 			-- Resume the thread.
-			if coroutine.status(thread) == "suspended" then -- To avoid errors.
-				local _, err = coroutine.resume(thread, ...)
-				if err then error(err, 2) end
+			if coroutine.status(thread) == "suspended" then -- To avoid creating new threads.
+				task.spawn(thread, ...)
 			end
 		end
 	}
