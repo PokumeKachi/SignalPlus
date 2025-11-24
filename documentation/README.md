@@ -1,31 +1,36 @@
 ---
-cover: .gitbook/assets/Cover.png
-coverY: 0
-layout:
-  width: default
-  cover:
-    visible: true
-    size: full
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
-  metadata:
-    visible: true
+icon: box-archive
 ---
 
-# Welcome
+# Installation
 
-Signal+ is built for developers who demand performance without compromise.\
-It’s fast, reliable, and equipped with every feature that matters.
+{% stepper %}
+{% step %}
+### Get the module
 
-**It easily outperforms leading alternatives like**\
-**Good-, Lemon-, and FastSignal — in both design and execution.**
+{% tabs %}
+{% tab title="Creator Store" %}
+<a href="https://create.roblox.com/store/asset/118793070598362" class="button primary">Get Roblox Asset</a>
 
-Ready to learn all about it? Let’s go!
+* Click `Get Model`.
+* Open the ToolBox in Roblox Studio.
+* Go to the `Inventory` tab.
+* Click on `Signal+` to insert.
+{% endtab %}
+
+{% tab title="GitHub" %}
+<a href="https://github.com/AlexanderLindholt/SignalPlus/releases/latest" class="button primary">See Latest Release</a>
+
+* Download the `.rbxm` file.
+* Find the file in your file explorer.
+* Drag the file into Roblox Studio.
+{% endtab %}
+{% endtabs %}
+{% endstep %}
+
+{% step %}
+### Place it
+
+Find a great place for the module, where other scripts can reference it.
+{% endstep %}
+{% endstepper %}
