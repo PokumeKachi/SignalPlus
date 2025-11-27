@@ -32,8 +32,8 @@ Scripts can also add or remove signals from the ModuleScript at any time.
 
 Example:
 
+{% code title="Signals (ModuleScript)" %}
 ```lua
--- "Signals" (ModuleScript)
 local Signal = require(script.SignalPlus)
 
 return {
@@ -41,9 +41,10 @@ return {
 	SuperCoolSignal = Signal() :: Signal.Signal<number> -- Custom type :D
 }
 ```
+{% endcode %}
 
+{% code title="Some script" %}
 ```lua
--- Some script
 local signals = require(script.Signals)
 local coolSignal = signals.CoolSignal
 
@@ -51,9 +52,10 @@ task.wait(5)
 
 coolSignal:Fire()
 ```
+{% endcode %}
 
+{% code title="Some other script" %}
 ```lua
--- Some other script
 local signals = require(script.Signals)
 local coolSignal = signals.CoolSignal
 
@@ -61,6 +63,7 @@ coolSignal:Connect(function()
 	print("CoolSignal fired!")
 end)
 ```
+{% endcode %}
 
 </details>
 
@@ -76,8 +79,8 @@ Scripts can also add or remove signals from the shared table at any time.
 
 Example:
 
+{% code title="Some script" %}
 ```lua
--- Some script
 local Signal = require(script.SignalPlus)
 shared.CoolSignal = Signal()
 
@@ -85,15 +88,16 @@ task.wait(5)
 
 shared.CoolSignal:Fire()
 ```
+{% endcode %}
 
+{% code title="Some other script" %}
 ```lua
--- Some other script
-
 -- Just make sure that this part runs after
 -- the signal has been added to the shared table.
 shared.CoolSignal:Connect(function()
 	print("CoolSignal fired!")
 end)
 ```
+{% endcode %}
 
 </details>

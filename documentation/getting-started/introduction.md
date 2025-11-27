@@ -25,6 +25,4 @@ local Signal = require(script.SignalPlus)
 local signal = Signal() -- Creates a new signal.
 ```
 
-
-
-You can then use methods to control and fire connections on the signal — just like BindableEvents and other signal alternatives.
+You can then use methods to control and fire connections on the signal — just like BindableEvents and other signal alternatives. See the full API on the next page.

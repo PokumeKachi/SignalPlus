@@ -23,10 +23,14 @@ This means you can have autocompletion for the [parameters](https://create.roblo
 
 <figure><img src="../.gitbook/assets/Custom type example.png" alt=""><figcaption></figcaption></figure>
 
+
+
 You can provide your own parameters as shown in the screenshot above:
 
 ```lua
 local mySignal = Signal() :: Signal.Signal<PARAMETERS_HERE>
 ```
 
+{% hint style="success" %}
 All methods (`Connect`, `Once`, `Wait`, and `Fire`) will display your desired parameters.
+{% endhint %}
