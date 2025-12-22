@@ -20,7 +20,7 @@
  +++++++++++++++++++++++++                                                                          
       +++++                                                                                         
 
-v3.6.1
+v3.7.0
 
 An exceptionally fast, lightweight, and elegant open-source signal
 library for Luau — with generic types and detailed documentation.
@@ -64,10 +64,11 @@ SOFTWARE.
 
 -- Types.
 export type Connection = {
+	Signal: Signal,
 	Connected: boolean,
 	Disconnect: typeof(
 		-- Removes the connection from the signal.
-		-- The connection’s data remains.
+		-- <strong>The connection’s data remains.</strong>
 		function(connection: Connection) end
 	)
 }
@@ -86,13 +87,13 @@ export type Signal<Parameters...> = {
 	),
 	
 	Fire: typeof(
-		--✨
+		-- Runs all connected functions and resumes all waiting threads.
 		function(signal: Signal<Parameters...>, ...: Parameters...) end
 	),
 	
 	DisconnectAll: typeof(
 		-- Erases all connections.
-		-- <em>Much faster than calling <code>Disconnect</code> on each.</em>
+		-- <strong>Much faster than calling <code>Disconnect</code> on each.</strong>
 		function(signal: Signal<Parameters...>) end
 	),
 	Destroy: typeof(
@@ -109,7 +110,7 @@ type CreateSignal = typeof(
 -- Spawn function.
 local spawnThread = if script:GetAttribute("Deferred") then task.defer else task.spawn
 
--- Setup callback threads.
+-- Setup reusable callback threads.
 local threads = {}
 
 local function reusableThreadCall(callback, thread, ...)
@@ -123,10 +124,7 @@ local function reusableThread()
 end
 
 -- Connection methods.
-local Connection = {}
-Connection.__index = Connection
-
-Connection.Disconnect = function(connection)
+local function disconnect(connection)
 	-- Verify connection.
 	if not connection.Connected then return end
 	
@@ -163,7 +161,8 @@ Signal.Connect = function(signal, callback)
 		
 		Callback = callback,
 		
-		Connected = true
+		Connected = true,
+		Disconnect = disconnect
 	}
 	
 	-- Add connection.
@@ -175,14 +174,14 @@ Signal.Connect = function(signal, callback)
 	signal.Head = connection
 	
 	-- Return connection.
-	return setmetatable(connection, Connection)
+	return connection
 end
 Signal.Once = function(signal, callback)
 	-- Linked list head.
 	local head = signal.Head
 	
 	-- Create connection.
-	local connection = nil
+	local connection
 	connection = {
 		Signal = signal,
 		Previous = head,
@@ -211,7 +210,8 @@ Signal.Once = function(signal, callback)
 			callback(...)
 		end,
 		
-		Connected = true
+		Connected = true,
+		Disconnect = disconnect
 	}
 	
 	-- Add connection.
@@ -223,7 +223,7 @@ Signal.Once = function(signal, callback)
 	signal.Head = connection
 	
 	-- Return connection.
-	return setmetatable(connection, Connection)
+	return connection
 end
 Signal.Wait = function(signal)
 	-- Save this thread to resume later.
@@ -233,7 +233,7 @@ Signal.Wait = function(signal)
 	local head = signal.Head
 	
 	-- Create connection.
-	local connection = nil
+	local connection
 	connection = {
 		Previous = head,
 		
@@ -322,5 +322,5 @@ end
 
 -- Signal creation function.
 return function()
-	return setmetatable({}, Signal) -- New blank metatable with signal methods attached.
+	return setmetatable({}, Signal) -- New blank table linked to the signal methods.
 end :: CreateSignal
