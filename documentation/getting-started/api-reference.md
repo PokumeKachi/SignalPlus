@@ -35,3 +35,4 @@ layout:
 | ---------- | -------- | -------------------------------------------------------------------------------------------------------- |
 | Disconnect | Method   | <p>Removes the connection from the signal.</p><p><br><strong>The connection’s data remains.</strong></p> |
 | Connected  | Property | A boolean representing the connection state.                                                             |
+| Signal     | Property | A reference to the signal the connection is a part of.                                                   |
