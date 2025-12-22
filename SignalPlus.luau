@@ -297,6 +297,8 @@ Signal.DisconnectAll = function(signal)
 	local connection = signal.Tail
 	while connection do
 		connection.Connected = nil
+		connection.Next = nil
+		connection.Previous = nil
 		-- Traverse.
 		connection = connection.Next
 	end
@@ -309,6 +311,8 @@ Signal.Destroy = function(signal)
 	local connection = signal.Tail
 	while connection do
 		connection.Connected = nil
+		connection.Next = nil
+		connection.Previous = nil
 		-- Traverse.
 		connection = connection.Next
 	end
