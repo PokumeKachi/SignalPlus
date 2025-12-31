@@ -20,10 +20,10 @@
  +++++++++++++++++++++++++                                                                          
       +++++                                                                                         
 
-v3.7.0
+v3.7.1
 
 An exceptionally fast, lightweight, and elegant open-source signal
-library for Luau — with generic types and detailed documentation.
+library for Luau - with generic types and detailed documentation.
 
 
 GitHub (repository):
@@ -68,7 +68,7 @@ export type Connection = {
 	Connected: boolean,
 	Disconnect: typeof(
 		-- Removes the connection from the signal.
-		-- <strong>The connection’s data remains.</strong>
+		-- <strong>The connection's data remains.</strong>
 		function(connection: Connection) end
 	)
 }
@@ -296,13 +296,16 @@ Signal.DisconnectAll = function(signal)
 	-- Remove all connections.
 	local connection = signal.Tail
 	while connection do
+		-- Save next connection.
+		local nextConnection = connection.Next
+		-- Remove data and pointers.
 		connection.Connected = nil
 		connection.Next = nil
 		connection.Previous = nil
 		-- Traverse.
-		connection = connection.Next
+		connection = nextConnection
 	end
-	-- Remove signal’s references.
+	-- Remove signal's references.
 	signal.Tail = nil
 	signal.Head = nil
 end
@@ -310,13 +313,16 @@ Signal.Destroy = function(signal)
 	-- Remove all connections.
 	local connection = signal.Tail
 	while connection do
+		-- Save next connection.
+		local nextConnection = connection.Next
+		-- Remove data and pointers.
 		connection.Connected = nil
 		connection.Next = nil
 		connection.Previous = nil
 		-- Traverse.
-		connection = connection.Next
+		connection = nextConnection
 	end
-	-- Remove signal’s references.
+	-- Remove signal's references.
 	signal.Tail = nil
 	signal.Head = nil
 	
