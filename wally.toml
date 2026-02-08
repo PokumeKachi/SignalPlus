@@ -1,0 +1,10 @@
+[package]
+name = "AlexanderLindholt/tweenplus"
+version = "3.7.1"
+description = "An exceptionally fast, lightweight, and elegant open-source signal library for Luau — with generic types and detailed documentation."
+license = "MIT"
+realm = "shared"
+registry = "https://github.com/upliftgames/wally-index"
+repository = "https://github.com/AlexanderLindholt/SignalPlus"
+
+include = ["source/**"]
